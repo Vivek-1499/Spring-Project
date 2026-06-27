@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Home from "./Home"
+import Home from "./Home";
 import axios from "axios";
 // import { json } from "react-router-dom";
 // import { BiSunFill, BiMoon } from "react-icons/bi";
@@ -15,7 +15,7 @@ const Navbar = ({ onSelectCategory, onSearch }) => {
   const [searchResults, setSearchResults] = useState([]);
   const [noResults, setNoResults] = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
-  const [showSearchResults,setShowSearchResults] = useState(false)
+  const [showSearchResults, setShowSearchResults] = useState(false);
   useEffect(() => {
     fetchData();
   }, []);
@@ -33,17 +33,17 @@ const Navbar = ({ onSelectCategory, onSearch }) => {
   const handleChange = async (value) => {
     setInput(value);
     if (value.length >= 1) {
-      setShowSearchResults(true)
-    try {
-      const response = await axios.get(
-        `http://localhost:8080/api/product/search?keyword=${value}`
-      );
-      setSearchResults(response.data);
-      setNoResults(response.data.length === 0);
-      console.log(response.data);
-    } catch (error) {
-      console.error("Error searching:", error);
-    }
+      setShowSearchResults(true);
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/api/product/search?keyword=${value}`,
+        );
+        setSearchResults(response.data);
+        setNoResults(response.data.length === 0);
+        console.log(response.data);
+      } catch (error) {
+        console.error("Error searching:", error);
+      }
     } else {
       setShowSearchResults(false);
       setSearchResults([]);
@@ -51,7 +51,6 @@ const Navbar = ({ onSelectCategory, onSearch }) => {
     }
   };
 
-  
   // const handleChange = async (value) => {
   //   setInput(value);
   //   if (value.length >= 1) {
@@ -105,10 +104,10 @@ const Navbar = ({ onSelectCategory, onSearch }) => {
   return (
     <>
       <header>
-        <nav className="navbar navbar-expand-lg fixed-top">
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow fixed-top">
           <div className="container-fluid">
-            <a className="navbar-brand" href="https://telusko.com/">
-              Telusko
+            <a className="navbar-brand fw-bold text-primary" href="/">
+              🛒 ShopEase
             </a>
             <button
               className="navbar-toggler"
@@ -117,14 +116,12 @@ const Navbar = ({ onSelectCategory, onSearch }) => {
               data-bs-target="#navbarSupportedContent"
               aria-controls="navbarSupportedContent"
               aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
+              aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
             </button>
             <div
               className="collapse navbar-collapse"
-              id="navbarSupportedContent"
-            >
+              id="navbarSupportedContent">
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                 <li className="nav-item">
                   <a className="nav-link active" aria-current="page" href="/">
@@ -143,8 +140,7 @@ const Navbar = ({ onSelectCategory, onSearch }) => {
                     href="/"
                     role="button"
                     data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
+                    aria-expanded="false">
                     Categories
                   </a>
 
@@ -152,9 +148,8 @@ const Navbar = ({ onSelectCategory, onSearch }) => {
                     {categories.map((category) => (
                       <li key={category}>
                         <button
-                          className="dropdown-item"
-                          onClick={() => handleCategorySelect(category)}
-                        >
+                          className="dropdown-item py-2"
+                          onClick={() => handleCategorySelect(category)}>
                           {category}
                         </button>
                       </li>
@@ -164,52 +159,53 @@ const Navbar = ({ onSelectCategory, onSearch }) => {
 
                 <li className="nav-item"></li>
               </ul>
-              <button className="theme-btn" onClick={() => toggleTheme()}>
+              <button
+                className="btn btn-outline-warning rounded-circle ms-3"
+                onClick={toggleTheme}>
                 {theme === "dark-theme" ? (
-                  <i className="bi bi-moon-fill"></i>
+                  <i className="bi bi-moon-stars-fill"></i>
                 ) : (
                   <i className="bi bi-sun-fill"></i>
                 )}
               </button>
               <div className="d-flex align-items-center cart">
-                <a href="/cart" className="nav-link text-dark">
-                  <i
-                    className="bi bi-cart me-2"
-                    style={{ display: "flex", alignItems: "center" }}
-                  >
-                    Cart
-                  </i>
+                <a
+                  href="/cart"
+                  className="btn btn-outline-primary rounded-pill ms-3">
+                  <i className="bi bi-cart-fill me-2"></i>
+                  Cart
                 </a>
                 {/* <form className="d-flex" role="search" onSubmit={handleSearch} id="searchForm"> */}
-                <input
-                  className="form-control me-2"
-                  type="search"
-                  placeholder="Search"
-                  aria-label="Search"
-                  value={input}
-                  onChange={(e) => handleChange(e.target.value)}
-                  onFocus={() => setSearchFocused(true)} // Set searchFocused to true when search bar is focused
-                  onBlur={() => setSearchFocused(false)} // Set searchFocused to false when search bar loses focus
-                />
-                {showSearchResults && (
-                  <ul className="list-group">
-                    {searchResults.length > 0 ? (  
+
+                <div className="search-container position-relative">
+                  <input
+                    className="form-control rounded-pill px-4"
+                    type="search"
+                    placeholder="Search products..."
+                    value={input}
+                    onChange={(e) => handleChange(e.target.value)}
+                  />
+
+                  {showSearchResults && (
+                    <ul className="list-group search-results shadow">
+                      {searchResults.length > 0 ? (
                         searchResults.map((result) => (
                           <li key={result.id} className="list-group-item">
-                            <a href={`/product/${result.id}`} className="search-result-link">
-                            <span>{result.name}</span>
+                            <a
+                              href={`/product/${result.id}`}
+                              className="text-decoration-none">
+                              {result.name}
                             </a>
                           </li>
                         ))
-                    ) : (
-                      noResults && (
-                        <p className="no-results-message">
-                          No Prouduct with such Name
-                        </p>
-                      )
-                    )}
-                  </ul>
-                )}
+                      ) : (
+                        <li className="list-group-item text-danger">
+                          No Product Found
+                        </li>
+                      )}
+                    </ul>
+                  )}
+                </div>
                 {/* <button
                   className="btn btn-outline-success"
                   onClick={handleSearch}

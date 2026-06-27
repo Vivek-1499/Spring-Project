@@ -98,7 +98,7 @@ const Home = ({ selectedCategory }) => {
                   boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
                   borderRadius: "10px",
                   overflow: "hidden", 
-                  backgroundColor: available ? "#fff" : "#ccc",
+                  backgroundColor: available ? "#242424" : "#ccc",
                   display: "flex",
                   flexDirection: "column",
                   justifyContent:'flex-start',
