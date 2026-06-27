@@ -1,0 +1,56 @@
+# IDE Files
+############################
+.idea/
+.vscode/
+*.iml
+*.classpath
+*.project
+*.settings/
+
+############################
+# Logs
+############################
+*.log
+logs/
+
+############################
+# Backend (Spring Boot / Maven)
+############################
+backend/target/
+backend/.mvn/wrapper/maven-wrapper.jar
+
+# Java
+*.class
+
+############################
+# Frontend (React)
+############################
+frontend/node_modules/
+frontend/build/
+frontend/dist/
+
+# Environment files
+frontend/.env
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+
+############################
+# Package Managers
+############################
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/pnpm-debug.log*
+
+############################
+# Coverage
+############################
+coverage/
+
+############################
+# Misc
+############################
+*.swp
+*.swo
